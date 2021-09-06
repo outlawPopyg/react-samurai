@@ -1,0 +1,39 @@
+.dialogs {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.divider {
+    width: 1px;
+    background: black;
+    height: inherit;
+}
+
+.dialog-item {
+    position: relative;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.dialog-message {
+    font-size: 20px;
+}
+
+.dialog-item:before {
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: cornflowerblue;
+    border-radius: 100%;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dialog-item a {
+    text-decoration: none;
+    color: black;
+}

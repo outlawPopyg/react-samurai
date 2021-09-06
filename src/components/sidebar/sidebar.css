@@ -1,0 +1,8 @@
+nav a {
+    text-decoration: none;
+    color: black;
+}
+
+nav a.active, nav a:hover {
+    font-weight: 500;
+}
