@@ -18,6 +18,6 @@ ___
 Назвать файл, например, не **index.css**, a **index.modules.css**.
 Теперь при импорте в jsx, импортируется объект с уникальными классам. 
 Пример использования:   
-   > `import classes from './index.modules.css'` <br>
-   > `<nav className={classes.nav} />` <br>
-   > `<header className={classes.header} />` <br>
+    `import classes from './index.modules.css'
+    <nav className={classes.nav} />
+    <header className={classes.header} />`
