@@ -2,34 +2,53 @@ import React from 'react';
 import './dialogs.css';
 import {NavLink} from "react-router-dom";
 
+const DialogItem = ({name, id}) => {
+    return (
+        <div className="dialog-item">
+            <NavLink to={`/dialogs/${id}`}>{name}</NavLink>
+        </div>
+    );
+}
+
+const Message = ({message}) => {
+    return <div className="dialog-message">{message}</div>
+}
+
 const Dialogs = () => {
+
+    const dialogsData = [
+        {id: 1, name: "Kalim"},
+        {id: 2, name: "Andrew"},
+        {id: 3, name: "Calvin"},
+        {id: 4, name: "Dutch"}
+    ];
+
+    const messagesData = [
+        {id: 1, message: "Hello, how are you?"},
+        {id: 2, message: "Can you help me ? "},
+        {id: 3, message: "Get my dick inside"}
+    ];
+
     return (
         <>
             <h1>Dialogs</h1>
             <div className="dialogs">
                 <div className="dialogs-items">
-                    <div className="dialog-item">
-                        <NavLink to="/dialogs/1" >Kalim</NavLink>
-                    </div>
-                    <div className="dialog-item">
-                        <NavLink to="/dialogs/2">Mark</NavLink>
-                    </div>
-                    <div className="dialog-item">
-                        <NavLink to="/dialogs/3">Asgat</NavLink>
-                    </div>
-                    <div className="dialog-item">
-                        <NavLink to="/dialogs/4">Shamil</NavLink>
-                    </div>
-                    <div className="dialog-item">
-                        <NavLink to="/dialogs/5">Georgiy</NavLink>
-                    </div>
-
+                    {
+                        dialogsData.map((person) => {
+                            return <DialogItem { ...person } />
+                        })
+                    }
                 </div>
+
                 <div className="divider"></div>
+
                 <div className="dialog-messages">
-                    <div className="dialog-message">Hello</div>
-                    <div className="dialog-message">How are you?</div>
-                    <div className="dialog-message">Try to find it</div>
+                    {
+                        messagesData.map(({id, message}) => {
+                            return <Message key={id} id={id} message={message} />
+                        })
+                    }
                 </div>
             </div>
         </>

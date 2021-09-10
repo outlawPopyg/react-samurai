@@ -18,6 +18,13 @@ ___
 Назвать файл, например, не **index.css**, a **index.modules.css**.
 Теперь при импорте в jsx, импортируется объект с уникальными классам. 
 Пример использования:   
-    `import classes from './index.modules.css'
+```jsx
+    import classes from './index.modules.css';
     <nav className={classes.nav} />
-    <header className={classes.header} />`
+    <header className={classes.header} />
+```
+
+## UI - BLL
+
+**BLL** (Business Logic Layer) - отвечает за данные, которые приходят с сервера <br>
+**UI** (User Interface) - компоненты пользовательских интерфейсов
