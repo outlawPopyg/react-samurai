@@ -46,3 +46,29 @@ const a = ({ parents: { mother, father }}) => {
 
 a(obj); // => Rihanna Dutch
 ```
+
+## React.createRef()
+
+createRef() создает ссылку на jsx элемент, свойства которого
+можно будет читать.
+
+```jsx
+const MyPosts = () => {
+    
+   const addPost = () => {
+        // получаем input 
+        alert(inputElement.current.value);
+   }
+   
+   // Создаем ссылку на input
+   const inputElement = React.createRef();
+
+   return (
+        <div>
+         // указывем в ref ссылку
+         <input ref={inputElement} type="text"/>
+        </div>
+   );
+}
+
+```
