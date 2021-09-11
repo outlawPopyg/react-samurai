@@ -19,12 +19,30 @@ ___
 Теперь при импорте в jsx, импортируется объект с уникальными классам. 
 Пример использования:   
 ```jsx
-    import classes from './index.modules.css';
-    <nav className={classes.nav} />
-    <header className={classes.header} />
+import classes from './index.modules.css';
+<nav className={classes.nav} />
+<header className={classes.header} />
 ```
 
 ## UI - BLL
 
 **BLL** (Business Logic Layer) - отвечает за данные, которые приходят с сервера ( Пример Redux ) <br>
 **UI** (User Interface) - компоненты пользовательских интерфейсов ( Пример React )
+
+## Множественная деструктуризация
+
+```javascript
+const obj = {
+    name: "Arthur",
+    parents: {
+        mother: "Rihanna",
+        father: "Dutch"
+    }
+}
+
+const a = ({ parents: { mother, father }}) => {
+    console.log(mother + " " + father);
+}
+
+a(obj); // => Rihanna Dutch
+```
