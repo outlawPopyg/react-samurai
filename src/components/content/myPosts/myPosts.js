@@ -1,20 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Post from "./post/post";
 import './myPosts.css';
 
-const MyPosts = ({ postsData }) => {
+const MyPosts = ({ postsData, addPost, updateNewPostText, newPostText }) => {
 
-    const addPost = () => {
-        alert(inputElement.current.value);
+    const onChangeInput = ({ target: { value } }) => {
+        updateNewPostText(value);
     }
-
-    const inputElement = React.createRef();
 
     return (
         <div>
             <h1>My posts</h1>
-            <input ref={inputElement} type="text"/>
-            <button onClick={ addPost }>Add new post</button>
+            <input value={newPostText} onChange={ onChangeInput } type="text"/>
+            <button onClick={() => addPost(newPostText)}>Add new post</button>
             <div>
                 {
                     postsData.map( (data) => {
