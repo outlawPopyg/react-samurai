@@ -72,3 +72,35 @@ const MyPosts = () => {
 }
 
 ```
+
+## Паттерн Observer
+
+Этот паттерн позволяет избежать циклическую зависсимость
+в проекте. Когда два или более файлов импортируют друг у друга
+ф-ии или переменные.
+
+```jsx
+// index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from "./app";
+import { state, addPost, updateNewPostText, subscribe } from "./state/state";
+
+const rerender = () => {
+ ReactDOM.render(
+         <App state={state} addPost={addPost} updateNewPostText={updateNewPostText} />,
+         document.getElementById('root')
+ );
+};
+
+rerender();
+
+subscribe(rerender);
+```
+```jsx
+// state.js
+let rerender = (state) => {};
+export const subscribe = (observer) => {
+ rerender = observer;
+}
+```
