@@ -1,11 +1,11 @@
 import React from 'react';
 import './dialogs.css';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
 
 
-const Dialogs = ({ state: { dialogsData, messagesData} }) => {
+const Dialogs = ({ state: { dialogsData, messagesData, newMessageText } }) => {
 
     return (
         <>
@@ -28,6 +28,10 @@ const Dialogs = ({ state: { dialogsData, messagesData} }) => {
                         })
                     }
                 </div>
+            </div>
+            <div className="dialogs-input">
+                <input value={newMessageText} type="text"/>
+                <button>Send</button>
             </div>
         </>
     );

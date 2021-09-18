@@ -1,3 +1,6 @@
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+
 const store = {
     _state: {
         dialogsPage: {
@@ -7,11 +10,12 @@ const store = {
                 {id: 3, message: "Get my dick inside"}
             ],
             dialogsData: [
-                {id: 1, name: "Kalim"},
+                {id: 1, name: "Ivan"},
                 {id: 2, name: "Andrew"},
                 {id: 3, name: "Calvin"},
                 {id: 4, name: "Dutch"}
-            ]
+            ],
+            newMessageText: ''
         },
 
         contentPage: {
@@ -26,19 +30,27 @@ const store = {
         return this._state;
     },
     rerender(state) {},
-    addPost(message) {
-        let newPost = { id: 5, message, likesCount: 4 };
-        this._state.contentPage.newPostText = '';
-        this._state.contentPage.postsData.push(newPost);
-        this.rerender(this._state);
-    },
-    updateNewPostText(text) {
-        this._state.contentPage.newPostText = text;
-        this.rerender(this._state);
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            let newPost = { id: 5, message: this._state.contentPage.newPostText, likesCount: 4 };
+            this._state.contentPage.newPostText = '';
+            this._state.contentPage.postsData.push(newPost);
+            this.rerender(this._state);
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.contentPage.newPostText = action.text;
+            this.rerender(this._state);
+        }
     },
     subscribe(observer) {
         this.rerender = observer; // observer-pattern
     }
 }
 
-export default store;
+const addPostActionCreator = () => ( { type: "ADD-POST"} );
+const updateTextActionCreator = (value) => ( { type: "UPDATE-NEW-POST-TEXT", text: value });
+
+export {
+    store,
+    addPostActionCreator,
+    updateTextActionCreator
+};

@@ -1,18 +1,20 @@
 import React, {useEffect} from 'react';
 import Post from "./post/post";
 import './myPosts.css';
+import { updateTextActionCreator, addPostActionCreator } from "../../../state/state";
 
-const MyPosts = ({ postsData, addPost, updateNewPostText, newPostText }) => {
+
+const MyPosts = ({ postsData, newPostText, dispatch }) => {
 
     const onChangeInput = ({ target: { value } }) => {
-        updateNewPostText(value);
+        dispatch(updateTextActionCreator(value));
     }
 
     return (
         <div>
             <h1>My posts</h1>
             <input value={newPostText} onChange={ onChangeInput } type="text"/>
-            <button onClick={() => addPost(newPostText)}>Add new post</button>
+            <button className={"my-posts-button"} onClick={ () => dispatch(addPostActionCreator()) }>Add new post</button>
             <div>
                 {
                     postsData.map( (data) => {

@@ -6,7 +6,7 @@ import Content from "./components/content/content";
 import Dialogs from "./components/dialogs/dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 
-const App = ({ state: { dialogsPage, contentPage }, addPost, updateNewPostText }) => {
+const App = ({ state: { dialogsPage, contentPage }, dispatch }) => {
 
     return (
         <BrowserRouter>
@@ -14,10 +14,12 @@ const App = ({ state: { dialogsPage, contentPage }, addPost, updateNewPostText }
                 <Header />
                 <Sidebar />
                 <div className="app-wrapper-content">
+
                     <Route exact path="/dialogs" render={ () => <Dialogs state={ dialogsPage } /> } />
-                    <Route exact path="/profile" render={() => <Content state={ contentPage }
-                                                                        updateNewPostText={updateNewPostText}
-                                                                        addPost={addPost} />}  />
+
+                    <Route exact path="/profile" render={() => {
+                        return <Content state={ contentPage } dispatch={dispatch} /> }
+                    }/>
                 </div>
             </div>
         </BrowserRouter>

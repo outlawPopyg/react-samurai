@@ -37,3 +37,29 @@
     text-decoration: none;
     color: black;
 }
+
+.dialogs-input {
+    margin-top: 50px;
+}
+
+.dialogs-input button {
+    margin-left: 20px;
+    padding: 5px;
+    background-color: lightblue;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    box-shadow: lightskyblue 2px 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
