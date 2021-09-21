@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Post from "./post/post";
 import './myPosts.css';
-import { updateTextActionCreator, addPostActionCreator } from "../../../state/state";
+import { updateTextActionCreator, addPostActionCreator } from "../../../state/content-reducer";
 
 
 const MyPosts = ({ postsData, newPostText, dispatch }) => {

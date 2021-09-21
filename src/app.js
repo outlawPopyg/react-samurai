@@ -15,7 +15,7 @@ const App = ({ state: { dialogsPage, contentPage }, dispatch }) => {
                 <Sidebar />
                 <div className="app-wrapper-content">
 
-                    <Route exact path="/dialogs" render={ () => <Dialogs state={ dialogsPage } /> } />
+                    <Route exact path="/dialogs" render={ () => <Dialogs dispatch={dispatch} state={ dialogsPage } /> } />
 
                     <Route exact path="/profile" render={() => {
                         return <Content state={ contentPage } dispatch={dispatch} /> }

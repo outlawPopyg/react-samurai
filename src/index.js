@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
-import { store, addPostActionCreator, updateTextActionCreator } from "./state/state";
+import store  from "./state/state";
 
 const rerender = (state) => {
     ReactDOM.render(

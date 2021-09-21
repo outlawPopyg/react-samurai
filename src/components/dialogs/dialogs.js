@@ -1,11 +1,15 @@
 import React from 'react';
 import './dialogs.css';
-import { NavLink } from "react-router-dom";
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
+import { sendMessageActionCreator, updateMessageActionCreator } from "../../state/dialog-reducer";
 
 
-const Dialogs = ({ state: { dialogsData, messagesData, newMessageText } }) => {
+const Dialogs = ({ state: { dialogsData, messagesData, newMessageText }, dispatch }) => {
+
+    const onMessage = ({ target: { value }}) => dispatch(updateMessageActionCreator(value));
+
+    const onSend = () => dispatch(sendMessageActionCreator());
 
     return (
         <>
@@ -14,7 +18,7 @@ const Dialogs = ({ state: { dialogsData, messagesData, newMessageText } }) => {
                 <div className="dialogs-items">
                     {
                         dialogsData.map((person) => {
-                            return <DialogItem { ...person } />
+                            return <DialogItem {...person} key={ person.id } />
                         })
                     }
                 </div>
@@ -30,8 +34,8 @@ const Dialogs = ({ state: { dialogsData, messagesData, newMessageText } }) => {
                 </div>
             </div>
             <div className="dialogs-input">
-                <input value={newMessageText} type="text"/>
-                <button>Send</button>
+                <input onChange={ onMessage } value={newMessageText} type="text"/>
+                <button onClick={ onSend }>Send</button>
             </div>
         </>
     );
