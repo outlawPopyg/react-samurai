@@ -5,7 +5,22 @@ const SEND_MESSAGE = "SEND-MESSAGE";
 const updateMessageActionCreator = (value) => ({ type: "UPDATE-NEW-MESSAGE", text: value });
 const sendMessageActionCreator = () => ({ type: "SEND-MESSAGE" });
 
-const dialogReducer = (state, action) => {
+const initialState = {
+    messagesData: [
+        { id: uuid(), message: "Hello, how are you?" },
+        { id: uuid(), message: "Can you help me ? " },
+        { id: uuid(), message: "Get my dick inside" }
+    ],
+    dialogsData: [
+        {id: uuid(), name: "Ivan"},
+        {id: uuid(), name: "Andrew"},
+        {id: uuid(), name: "Calvin"},
+        {id: uuid(), name: "Dutch"}
+    ],
+    newMessageText: ''
+};
+
+const dialogReducer = (state = initialState, action) => {
 
     // eslint-disable-next-line default-case
     switch (action.type) {

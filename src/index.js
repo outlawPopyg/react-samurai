@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
-import store  from "./state/state";
+import store  from "./state/redux-store";
 
 const rerender = (state) => {
     ReactDOM.render(
         <App
             dispatch={store.dispatch.bind(store)}
-            state={ store.getState() }
+            state={ state }
         />,
         document.getElementById('root')
     );
@@ -15,4 +15,6 @@ const rerender = (state) => {
 
 rerender(store.getState());
 
-store.subscribe(rerender);
+store.subscribe(() => {
+    rerender(store.getState());
+});

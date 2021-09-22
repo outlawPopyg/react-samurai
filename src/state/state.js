@@ -28,14 +28,14 @@ const store = {
         }
     },
     getState() { return this._state; },
-    rerender(state) {},
+    rerender() {},
 
     dispatch(action) {
 
         this._state.dialogsPage = dialogReducer(this._state.dialogsPage, action);
         this._state.contentPage = contentReducer(this._state.contentPage, action);
 
-        this.rerender(this._state);
+        this.rerender();
     },
 
     subscribe(observer) {
