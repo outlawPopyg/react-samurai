@@ -2,14 +2,11 @@ import React from 'react';
 import './dialogs.css';
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
-import { sendMessageActionCreator, updateMessageActionCreator } from "../../state/dialog-reducer";
 
 
-const Dialogs = ({ state: { dialogsData, messagesData, newMessageText }, dispatch }) => {
+const Dialogs = ({ onSend, onMessage, dialogsPage }) => {
 
-    const onMessage = ({ target: { value }}) => dispatch(updateMessageActionCreator(value));
-
-    const onSend = () => dispatch(sendMessageActionCreator());
+    const { dialogsData, messagesData, newMessageText } = dialogsPage;
 
     return (
         <>
@@ -23,7 +20,7 @@ const Dialogs = ({ state: { dialogsData, messagesData, newMessageText }, dispatc
                     }
                 </div>
 
-                <div className="divider"></div>
+                <div className="divider" />
 
                 <div className="dialog-messages">
                     {

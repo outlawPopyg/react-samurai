@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
 import store  from "./state/redux-store";
+import { Provider } from "react-redux";
 
-const rerender = (state) => {
+const rerender = () => {
     ReactDOM.render(
-        <App
-            dispatch={store.dispatch.bind(store)}
-            state={ state }
-        />,
+        <Provider store={store}>
+            <App />
+        </Provider>,
         document.getElementById('root')
     );
 };
 
-rerender(store.getState());
+rerender();
 
 store.subscribe(() => {
-    rerender(store.getState());
+    rerender();
 });

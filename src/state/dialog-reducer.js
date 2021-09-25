@@ -34,7 +34,7 @@ const dialogReducer = (state = initialState, action) => {
             break;
     }
 
-    return state;
+    return {...state};
 }
 
 export default dialogReducer;

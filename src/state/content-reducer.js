@@ -29,7 +29,7 @@ const contentReducer = (state = initialState, action) => {
     }
 
 
-    return state;
+    return {...state};
 }
 
 export default contentReducer;

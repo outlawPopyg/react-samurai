@@ -104,3 +104,66 @@ export const subscribe = (observer) => {
  rerender = observer;
 }
 ```
+
+# Redux
+___
+
+## Container Component
+
+Контейнерная компонента отвечает за диспатчи и возвращает 
+презентационную компоненту, задача который лишь отобразить UI
+
+
+```jsx
+// myPostsContainer.js
+const MyPostsContainer = ({ postsData, newPostText, dispatch }) => {
+
+   const onChangeInput = ({ target: { value } }) => {
+       dispatch(updateTextActionCreator(value));
+   }
+   
+   const onButtonClick = () => {
+       dispatch(addPostActionCreator());
+   } 
+ 
+   return <MyPosts
+       postsData={postsData}
+       newPostText={newPostText}
+       onChangeInput={ onChangeInput }
+       onButtonClick={ onButtonClick }
+   />;
+}
+```
+
+```jsx
+// myPosts.js
+const MyPosts = ({ postsData, newPostText, onButtonClick, onChangeInput }) => {
+    console.log(newPostText);
+    return (
+        <div>
+            <h1>My posts</h1>
+            <input value={ newPostText } onChange={ onChangeInput } type="text"/>
+            <button className={"my-posts-button"} onClick={ onButtonClick }>Add new post</button>
+            <div>
+                {
+                    postsData.map( (data) => {
+                        return <Post key={data.id} {...data} />
+                    })
+                }
+            </div>
+        </div>
+    );
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+

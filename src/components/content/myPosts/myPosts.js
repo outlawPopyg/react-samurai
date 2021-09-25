@@ -1,20 +1,17 @@
 import React, {useEffect} from 'react';
 import Post from "./post/post";
 import './myPosts.css';
-import { updateTextActionCreator, addPostActionCreator } from "../../../state/content-reducer";
 
 
-const MyPosts = ({ postsData, newPostText, dispatch }) => {
+const MyPosts = ({ contentPage, onButtonClick, onChangeInput }) => {
 
-    const onChangeInput = ({ target: { value } }) => {
-        dispatch(updateTextActionCreator(value));
-    }
+    const { newPostText, postsData } = contentPage;
 
     return (
         <div>
             <h1>My posts</h1>
-            <input value={newPostText} onChange={ onChangeInput } type="text"/>
-            <button className={"my-posts-button"} onClick={ () => dispatch(addPostActionCreator()) }>Add new post</button>
+            <input value={ newPostText } onChange={ onChangeInput } type="text"/>
+            <button className={"my-posts-button"} onClick={ onButtonClick }>Add new post</button>
             <div>
                 {
                     postsData.map( (data) => {

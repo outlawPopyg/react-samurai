@@ -5,8 +5,9 @@ import Sidebar from "./components/sidebar/sidebar";
 import Content from "./components/content/content";
 import Dialogs from "./components/dialogs/dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
+import DialogsContainer from "./components/dialogs/dialogsContainer";
 
-const App = ({ state: { dialogsPage, contentPage }, dispatch }) => {
+const App = () => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -14,11 +15,10 @@ const App = ({ state: { dialogsPage, contentPage }, dispatch }) => {
                 <Sidebar />
                 <div className="app-wrapper-content">
 
-                    <Route exact path="/dialogs" render={ () => <Dialogs dispatch={dispatch} state={ dialogsPage } /> } />
+                    <Route exact path="/dialogs" render={ () => <DialogsContainer /> } />
 
-                    <Route exact path="/profile" render={() => {
-                        return <Content state={ contentPage } dispatch={dispatch} /> }
-                    }/>
+                    <Route exact path="/profile" render={() => <Content /> }
+                    />
                 </div>
             </div>
         </BrowserRouter>
