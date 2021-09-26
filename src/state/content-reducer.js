@@ -16,20 +16,22 @@ const initialState = {
 
 const contentReducer = (state = initialState, action) => {
 
+    const copyState = {...state};
+
     // eslint-disable-next-line default-case
     switch (action.type) {
         case ADD_POST:
-            let newPost = { id: uuid(), message: state.newPostText, likesCount: 4 };
-            state.newPostText = '';
-            state.postsData.push(newPost);
+            let newPost = { id: uuid(), message: copyState.newPostText, likesCount: 4 };
+            copyState.newPostText = '';
+            copyState.postsData.push(newPost);
             break;
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.text;
+            copyState.newPostText = action.text;
             break;
     }
 
 
-    return {...state};
+    return copyState;
 }
 
 export default contentReducer;
