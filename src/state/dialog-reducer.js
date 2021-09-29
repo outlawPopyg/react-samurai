@@ -12,34 +12,33 @@ const initialState = {
         { id: uuid(), message: "Get my dick inside" }
     ],
     dialogsData: [
-        {id: uuid(), name: "Ivan"},
-        {id: uuid(), name: "Andrew"},
-        {id: uuid(), name: "Calvin"},
-        {id: uuid(), name: "Dutch"}
+        { id: uuid(), name: "Ivan" },
+        { id: uuid(), name: "Andrew" },
+        { id: uuid(), name: "Calvin" },
+        { id: uuid(), name: "Dutch" }
     ],
     newMessageText: ''
 };
 
 const dialogReducer = (state = initialState, action) => {
 
-    const copyState = {...state};
-
-    // eslint-disable-next-line default-case
     switch (action.type) {
         case UPDATE_NEW_MESSAGE:
-            copyState.newMessageText = action.text;
-
-            return copyState;
+            return {
+                ...state,
+                newMessageText: action.text
+            };
 
         case SEND_MESSAGE:
-            const newMessage = { id: uuid(), message: copyState.newMessageText };
-            copyState.messagesData = [...state.messagesData, newMessage ];
-            copyState.newMessageText = "";
+            return {
+                ...state,
+                messagesData: [...state.messagesData, { id: uuid(), message: state.newMessageText }],
+                newMessageText: ""
+            }
 
-            return copyState;
+        default:
+            return state;
     }
-
-    return copyState;
 }
 
 export default dialogReducer;

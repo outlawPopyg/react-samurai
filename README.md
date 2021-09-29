@@ -156,6 +156,54 @@ const MyPosts = ({ postsData, newPostText, onButtonClick, onChangeInput }) => {
 }
 ```
 
+## Reducer'ы должны возвращать копии state'а 
+
+```js
+// dialogsReduces.js
+const dialogReducer = (state = initialState, action) => {
+
+    switch (action.type) {
+        case UPDATE_NEW_MESSAGE:
+            return {
+                ...state,
+                newMessageText: action.text
+            };
+
+        case SEND_MESSAGE:
+            return {
+                ...state,
+                messagesData: [...state.messagesData, { id: uuid(), message: state.newMessageText }],
+                newMessageText: ""
+            }
+
+        default:
+            return state;
+    }
+}
+```
+```js
+// contentReducer.js
+const contentReducer = (state = initialState, action) => {
+
+ switch (action.type) {
+
+  case ADD_POST:
+    return {
+      ...state,
+      postsData: [...state.postsData, { id: uuid(), message: state.newPostText, likesCount: 4 }],
+      newPostText: '',
+    }
+
+    case UPDATE_NEW_POST_TEXT:
+    return {
+      ...state,
+      newPostText: action.text
+    }
+    default:
+      return state;
+  }
+}
+```
 
 
 
