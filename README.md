@@ -205,6 +205,10 @@ const contentReducer = (state = initialState, action) => {
 }
 ```
 
+## Server API
+Application programming interface
+
+![Схема](src/images/server-api.png)
 
 
 
