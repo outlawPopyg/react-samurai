@@ -1,14 +1,8 @@
-import {v4 as uuid} from "uuid";
-
 const TOGGLE_FOLLOW = "TOGGLE-FOLLOW";
 const SET_USERS = "SET-USERS";
 
 const initialState = {
-    users: [
-        { id: uuid(), followed: false, name: "Claim", status: "I like football", location: { city: "Kazan", country: "Russia"} },
-        { id: uuid(), followed: false, name: "Ivan", status: "I'm looking for job", location: { city: "Moscow", country: "Russia"} },
-        { id: uuid(), followed: true, name: "Rick", status: "Hello", location: { city: "Arkansas", country: "USA"} }
-    ]
+    users: []
 };
 
 const usersReducer = (state = initialState, action) => {
