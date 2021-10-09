@@ -210,6 +210,19 @@ Application programming interface
 
 ![Схема](src/images/server-api.png)
 
+## Лайфак для mapDispatchToProps
+
+```js
+const mapDispatchToProps = {
+    onToggleFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setFetching
+};
+```
+Где `onToggleFollow`, `setUsers` ... - action creator'ы
+
 
 
 
