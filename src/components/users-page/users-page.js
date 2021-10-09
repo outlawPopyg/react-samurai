@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import './user-page.css';
 import userImage from '../../images/user.png';
+import {NavLink} from "react-router-dom";
 
 export default function UserPage({ pageSize, totalUsersCount, users, onToggleFollow, currentPage, setCurrentPage }) {
 
@@ -28,7 +29,9 @@ export default function UserPage({ pageSize, totalUsersCount, users, onToggleFol
                         return (
                             <li key={id} className="user">
                                 <div className="image">
-                                    <img src={ small !== null ? small : userImage } alt="user image"/>
+                                    <NavLink to={`users/${id}`}>
+                                        <img src={ small !== null ? small : userImage } alt="user image"/>
+                                    </NavLink>
                                 </div>
                                 <div>{ name }</div>
                                 <button onClick={ () => onToggleFollow(id) }>{ followed ? "Unfollow" : "Follow"}</button>

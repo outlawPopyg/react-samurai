@@ -4,7 +4,7 @@ import Header from "./components/header/header";
 import Sidebar from "./components/sidebar/sidebar";
 import { BrowserRouter, Route } from "react-router-dom";
 import DialogsContainer from "./components/dialogs/dialogsContainer";
-import Content from "./components/content/content";
+import ContentContainer from "./components/content/contentContainer";
 import UsersPageContainer from "./components/users-page/users-page-container";
 
 const App = () => {
@@ -17,9 +17,10 @@ const App = () => {
 
                     <Route exact path="/dialogs" component={ DialogsContainer } />
 
-                    <Route exact path="/profile" component={ Content } />
+                    <Route exact path="/profile" component={ ContentContainer } />
 
                     <Route exact path="/users"  component={ UsersPageContainer} />
+
                 </div>
             </div>
         </BrowserRouter>
