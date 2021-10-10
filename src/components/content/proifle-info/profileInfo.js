@@ -1,16 +1,23 @@
 import React from 'react';
+import Loader from "../../loader/loader";
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ userInfo }) => {
+    if (!userInfo) {
+        return <Loader />
+    }
+
+    const { fullName, photos: { large }, aboutMe } = userInfo;
     return (
         <>
             <div className="main-image">
-                <img
-                    src={"https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300"}
-                    alt="image"/>
+                <img src={ large } alt="user main image" />
             </div>
-            <div>avatar + descr</div>
+            <h1>{ fullName }</h1>
+            <div>{ aboutMe }</div>
         </>
     );
+
+
 }
 
 export default ProfileInfo;

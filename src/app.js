@@ -17,7 +17,7 @@ const App = () => {
 
                     <Route exact path="/dialogs" component={ DialogsContainer } />
 
-                    <Route exact path="/profile" component={ ContentContainer } />
+                    <Route path="/profile/:id?" component={ ContentContainer } />
 
                     <Route exact path="/users"  component={ UsersPageContainer} />
 

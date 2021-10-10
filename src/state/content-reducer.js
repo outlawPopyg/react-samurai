@@ -2,11 +2,14 @@ import {v4 as uuid} from "uuid";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_USERS_PROFILE = "SET-USER-PROFILE";
 
+const setUserProfile = (userInfo) => ({ type: SET_USERS_PROFILE, userInfo });
 const addPostActionCreator = () => ( { type: "ADD-POST"} );
 const updateTextActionCreator = (value) => ( { type: "UPDATE-NEW-POST-TEXT", text: value });
 
 const initialState = {
+    userInfo: '',
     newPostText: '',
     postsData: [
         { id: uuid(), message: "Hi, how are you?", likesCount: 12 },
@@ -30,6 +33,12 @@ const contentReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.text
             }
+
+        case SET_USERS_PROFILE:
+            return {
+                ...state,
+                userInfo: action.userInfo
+            }
         default:
             return state;
     }
@@ -37,7 +46,4 @@ const contentReducer = (state = initialState, action) => {
 
 export default contentReducer;
 
-export {
-    addPostActionCreator,
-    updateTextActionCreator
-};
+export { addPostActionCreator, updateTextActionCreator, setUserProfile };

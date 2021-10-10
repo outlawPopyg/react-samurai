@@ -3,10 +3,10 @@ import MyPosts from "./myPosts/myPosts";
 import ProfileInfo from "./proifle-info/profileInfo";
 import MyPostsContainer from "./myPosts/myPostsContainer";
 
-const Content = () => {
+const Content = ({ userInfo }) => {
     return (
         <div className={"main-content"}>
-            <ProfileInfo />
+            <ProfileInfo userInfo={ userInfo }/>
             <MyPostsContainer />
         </div>
     )

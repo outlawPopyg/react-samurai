@@ -16,6 +16,9 @@
     height: 100%;
 }
 
+.main-image {
+    height: 400px;
+}
 
 .main-image img {
     height: 100%;

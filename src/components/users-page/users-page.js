@@ -29,7 +29,7 @@ export default function UserPage({ pageSize, totalUsersCount, users, onToggleFol
                         return (
                             <li key={id} className="user">
                                 <div className="image">
-                                    <NavLink to={`users/${id}`}>
+                                    <NavLink to={`profile/${id}`}>
                                         <img src={ small !== null ? small : userImage } alt="user image"/>
                                     </NavLink>
                                 </div>
