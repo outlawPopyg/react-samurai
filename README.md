@@ -223,6 +223,16 @@ const mapDispatchToProps = {
 ```
 Где `onToggleFollow`, `setUsers` ... - action creator'ы
 
+## withCredentials
+
+Вторым параметром в get запросе через axios идет конфиг, в котором
+можно установить это свойство в true, тем самым позволяя слать
+авторизованные запросы на сервак
+```js
+axios.get(`${API_BASE}/auth/me`, {
+         withCredentials: true
+    }).then(res => console.log(res));
+```
 
 
 

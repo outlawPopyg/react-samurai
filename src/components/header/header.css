@@ -1,0 +1,11 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .login a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}

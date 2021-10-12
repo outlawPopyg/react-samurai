@@ -10,7 +10,7 @@ const ProfileInfo = ({ userInfo }) => {
     return (
         <>
             <div className="main-image">
-                <img src={ large } alt="user main image" />
+                <img src={ large } alt="main" />
             </div>
             <h1>{ fullName }</h1>
             <div>{ aboutMe }</div>

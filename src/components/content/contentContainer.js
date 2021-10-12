@@ -27,6 +27,6 @@ const mapStateToProps = (state) => ({
     userInfo: state.contentPage.userInfo
 });
 
-const mapDispatchToProps = { setUserProfile }
+const mapDispatchToProps = { setUserProfile };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContentContainer));

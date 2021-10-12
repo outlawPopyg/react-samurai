@@ -1,4 +1,3 @@
-import React from 'react';
 import './myPosts.css';
 import { updateTextActionCreator, addPostActionCreator } from "../../../state/content-reducer";
 import { connect } from "react-redux";

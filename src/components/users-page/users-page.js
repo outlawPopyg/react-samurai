@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import axios from "axios";
+import React from 'react';
 import './user-page.css';
 import userImage from '../../images/user.png';
 import {NavLink} from "react-router-dom";
@@ -30,7 +29,7 @@ export default function UserPage({ pageSize, totalUsersCount, users, onToggleFol
                             <li key={id} className="user">
                                 <div className="image">
                                     <NavLink to={`profile/${id}`}>
-                                        <img src={ small !== null ? small : userImage } alt="user image"/>
+                                        <img src={ small !== null ? small : userImage } alt="user"/>
                                     </NavLink>
                                 </div>
                                 <div>{ name }</div>
