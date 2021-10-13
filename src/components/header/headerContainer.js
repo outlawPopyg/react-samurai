@@ -15,6 +15,7 @@ class HeaderContainer extends Component {
             .then(response => {
                 if (response.data.resultCode === 0) {
                     this.props.setUserData(response.data.data);
+                    console.log(response.data.data);
                 } else {
                     console.log("You are not authorized");
                 }

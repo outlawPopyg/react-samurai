@@ -7,6 +7,8 @@ import ContentContainer from "./components/content/contentContainer";
 import UsersPageContainer from "./components/users-page/users-page-container";
 import HeaderContainer from "./components/header/headerContainer";
 
+export const API_BASE = "https://social-network.samuraijs.com/api/1.0/users";
+
 const App = () => {
     return (
         <BrowserRouter>

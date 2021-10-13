@@ -15,7 +15,9 @@ const API_BASE = "https://social-network.samuraijs.com/api/1.0/users";
 class UserPageContainer extends Component {
     componentDidMount() {
         this.props.setFetching(true);
-        axios.get(`${API_BASE}?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`${API_BASE}?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        })
             .then(res => {
                 this.props.setUsers(res.data.items);
                 this.props.setTotalUsersCount(Math.round(res.data.totalCount / 5));
@@ -26,7 +28,9 @@ class UserPageContainer extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.currentPage !== this.props.currentPage) {
             this.props.setFetching(true);
-            axios.get(`${API_BASE}?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            axios.get(`${API_BASE}?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                withCredentials: true
+            })
                 .then(res => this.props.setUsers(res.data.items))
                 .finally(() => this.props.setFetching(false));
         }

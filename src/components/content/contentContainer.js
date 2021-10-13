@@ -24,7 +24,9 @@ class ContentContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    userInfo: state.contentPage.userInfo
+    userInfo: state.contentPage.userInfo,
+    id: state.auth.id,
+    isAuth: state.auth.isAuth
 });
 
 const mapDispatchToProps = { setUserProfile };
