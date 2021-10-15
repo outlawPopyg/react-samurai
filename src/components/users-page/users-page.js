@@ -3,11 +3,12 @@ import './user-page.css';
 import userImage from '../../images/user.png';
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {follow} from "../../api/api";
 
 const API_BASE = "https://social-network.samuraijs.com/api/1.0";
 
 
-export default function UserPage({ pageSize, totalUsersCount, users, onToggleFollow, currentPage, setCurrentPage }) {
+export default function UserPage({ setFollowing, followingInProgress, pageSize, totalUsersCount, users, onToggleFollow, currentPage, setCurrentPage }) {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
     const pages = [];
@@ -37,31 +38,24 @@ export default function UserPage({ pageSize, totalUsersCount, users, onToggleFol
                                     </NavLink>
                                 </div>
                                 <div>{ name }</div>
-                                <button onClick={(url, config) => {
+                                <button
+                                    disabled={followingInProgress}
+                                    onClick={(url, config) => {
+                                    setFollowing(true);
                                     if (!followed) {
-                                        axios.post(`${API_BASE}/follow/${id}`, {}, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": "d7a22d46-2b9f-4ab6-9764-bdb9ae134d6d"
-                                            }
-                                        })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
+                                        follow(id, "post")
+                                            .then(data => {
+                                                if (data.resultCode === 0) {
                                                     onToggleFollow(id);
                                                 }
-                                            })
+                                            }).finally(() => setFollowing(false));
                                     } else {
-                                        axios.delete(`${API_BASE}/follow/${id}`, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": "d7a22d46-2b9f-4ab6-9764-bdb9ae134d6d"
-                                            }
-                                        })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
+                                        follow(id, "delete")
+                                            .then(data => {
+                                                if (data.resultCode === 0) {
                                                     onToggleFollow(id);
                                                 }
-                                            })
+                                            }).finally(() => setFollowing(false));
                                     }
                                 }}>{ followed ? "Unfollow" : "Follow"}</button>
                             </li>
