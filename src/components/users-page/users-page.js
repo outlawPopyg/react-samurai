@@ -2,13 +2,9 @@ import React from 'react';
 import './user-page.css';
 import userImage from '../../images/user.png';
 import {NavLink} from "react-router-dom";
-import axios from "axios";
 import {follow} from "../../api/api";
 
-const API_BASE = "https://social-network.samuraijs.com/api/1.0";
-
-
-export default function UserPage({ setFollowing, followingInProgress, pageSize, totalUsersCount, users, onToggleFollow, currentPage, setCurrentPage }) {
+export default function UserPage({ toggleFollow, followingInProgress, pageSize, totalUsersCount, users, currentPage, setCurrentPage }) {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
     const pages = [];
@@ -39,23 +35,12 @@ export default function UserPage({ setFollowing, followingInProgress, pageSize, 
                                 </div>
                                 <div>{ name }</div>
                                 <button
-                                    disabled={followingInProgress}
+                                    disabled={followingInProgress.some(uId => uId === id )}
                                     onClick={(url, config) => {
-                                    setFollowing(true);
                                     if (!followed) {
-                                        follow(id, "post")
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    onToggleFollow(id);
-                                                }
-                                            }).finally(() => setFollowing(false));
+                                        toggleFollow(id, "post");
                                     } else {
-                                        follow(id, "delete")
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    onToggleFollow(id);
-                                                }
-                                            }).finally(() => setFollowing(false));
+                                        toggleFollow(id, "delete");
                                     }
                                 }}>{ followed ? "Unfollow" : "Follow"}</button>
                             </li>

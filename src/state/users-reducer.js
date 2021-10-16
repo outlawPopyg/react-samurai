@@ -1,3 +1,5 @@
+import {follow, getUsers} from "../api/api";
+
 const TOGGLE_FOLLOW = "TOGGLE-FOLLOW";
 const SET_USERS = "SET-USERS";
 const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
@@ -11,7 +13,8 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: false
+    followingInProgress: [],
+    followingId: null
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -56,7 +59,9 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOWING_IN_PROGRESS:
             return {
                 ...state,
-                followingInProgress: action.followingInProgress
+                followingInProgress: action.followingInProgress ?
+                    [...state.followingInProgress, action.followingId] :
+                    state.followingInProgress.filter(id => id !== action.followingId)
             }
 
         default: return state;
@@ -68,6 +73,33 @@ export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage });
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
 export const setFetching = (isFetching) => ({ type: SET_FETCHING, isFetching });
-export const setFollowing = (followingInProgress) => ({ type: FOLLOWING_IN_PROGRESS, followingInProgress });
+export const setFollowing = (followingInProgress, followingId) => ({ type: FOLLOWING_IN_PROGRESS, followingInProgress, followingId });
+
+
+export const getUsersThunk = (currentPage, pageSize) => (dispatch) => {
+    dispatch(setFetching(true));
+
+    getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUsersCount(Math.round(data.totalCount / 5)));
+        })
+        .finally(() => dispatch(setFetching(false)));
+}
+
+export const toggleFollowUserThunk = (id, method) => (dispatch) => {
+    dispatch(setFollowing(true, id));
+    follow(id, method)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(onToggleFollow(id));
+            }
+        }).finally(() => dispatch(setFollowing(false, id)));
+}
+
+
+
+
+
 
 export default usersReducer;

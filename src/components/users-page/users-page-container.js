@@ -1,37 +1,19 @@
 import { connect } from "react-redux";
 import {
-    setUsers,
-    onToggleFollow,
-    setCurrentPage,
-    setTotalUsersCount,
-    setFetching,
-    setFollowing
+    onToggleFollow, setCurrentPage, setFollowing, getUsersThunk, toggleFollowUserThunk
 } from "../../state/users-reducer";
 import UsersPage from "./users-page";
 import {Component} from "react";
-import axios from "axios";
 import Loader from "../loader/loader";
-import {getUsers} from "../../api/api";
-const API_BASE = "https://social-network.samuraijs.com/api/1.0/users";
 
 class UserPageContainer extends Component {
     componentDidMount() {
-        this.props.setFetching(true);
-
-        getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(Math.round(data.totalCount / 5));
-            })
-            .finally(() => this.props.setFetching(false));
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.currentPage !== this.props.currentPage) {
-            this.props.setFetching(true);
-            getUsers(this.props.currentPage, this.props.pageSize)
-                .then(data => this.props.setUsers(data.items))
-                .finally(() => this.props.setFetching(false));
+            this.props.getUsers(this.props.currentPage, this.props.pageSize);
         }
     }
 
@@ -56,11 +38,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     onToggleFollow,
-    setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    setFetching,
-    setFollowing
+    setFollowing,
+    getUsers: getUsersThunk,
+    toggleFollow: toggleFollowUserThunk
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPageContainer);
