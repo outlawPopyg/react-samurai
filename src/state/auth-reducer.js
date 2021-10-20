@@ -1,3 +1,5 @@
+import {authMe} from "../api/api";
+
 const SET_USER_DATA = "SET-USER-DATA";
 
 const initialState = {
@@ -26,5 +28,17 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setUserData = (data) => ({ type: SET_USER_DATA, data });
+
+export const authMeThunk = () => (dispatch) => {
+    authMe()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setUserData(response.data.data));
+                console.log(response.data.data);
+            } else {
+                console.log("You are not authorized");
+            }
+        });
+}
 
 export default authReducer;

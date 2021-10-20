@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
 import Header from "./header";
 import {connect} from "react-redux";
-import { setUserData } from "../../state/auth-reducer";
-import axios from "axios";
-
-const API_BASE = "https://social-network.samuraijs.com/api/1.0";
+import { setUserData, authMeThunk } from "../../state/auth-reducer";
+import {authMe} from "../../api/api";
 
 class HeaderContainer extends Component {
 
     componentDidMount() {
-        axios.get(`${API_BASE}/auth/me`, {
-            withCredentials: true
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    this.props.setUserData(response.data.data);
-                    console.log(response.data.data);
-                } else {
-                    console.log("You are not authorized");
-                }
-            });
+        this.props.authMeThunk();
     }
 
     render() {
@@ -36,6 +24,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = { setUserData };
+const mapDispatchToProps = { setUserData, authMeThunk };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

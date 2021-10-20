@@ -1,12 +1,9 @@
 import {v4 as uuid} from "uuid";
+import {getProfile} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USERS_PROFILE = "SET-USER-PROFILE";
-
-const setUserProfile = (userInfo) => ({ type: SET_USERS_PROFILE, userInfo });
-const addPostActionCreator = () => ( { type: "ADD-POST"} );
-const updateTextActionCreator = (value) => ( { type: "UPDATE-NEW-POST-TEXT", text: value });
 
 const initialState = {
     userInfo: '',
@@ -44,6 +41,13 @@ const contentReducer = (state = initialState, action) => {
     }
 }
 
-export default contentReducer;
+export const setUserProfile = (userInfo) => ({ type: SET_USERS_PROFILE, userInfo });
+export const addPostActionCreator = () => ( { type: "ADD-POST"} );
+export const updateTextActionCreator = (value) => ( { type: "UPDATE-NEW-POST-TEXT", text: value });
 
-export { addPostActionCreator, updateTextActionCreator, setUserProfile };
+export const getUserProfileThunk = (id) => (dispatch) => {
+    getProfile(id)
+        .then(res => dispatch(setUserProfile(res.data)));
+}
+
+export default contentReducer;

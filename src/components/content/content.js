@@ -2,10 +2,10 @@ import React from 'react';
 import ProfileInfo from "./proifle-info/profileInfo";
 import MyPostsContainer from "./myPosts/myPostsContainer";
 
-const Content = ({ userInfo }) => {
+const Content = (props) => {
     return (
         <div className={"main-content"}>
-            <ProfileInfo userInfo={ userInfo }/>
+            <ProfileInfo { ...props } />
             <MyPostsContainer />
         </div>
     )

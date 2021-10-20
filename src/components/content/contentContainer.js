@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
 import Content from "./content";
-import axios from "axios";
 import {connect} from "react-redux";
-import { setUserProfile } from "../../state/content-reducer";
+import { setUserProfile, getUserProfileThunk } from "../../state/content-reducer";
 import {withRouter} from "react-router-dom";
-
-const API_BASE = "https://social-network.samuraijs.com/api/1.0/profile";
+import {compose} from "redux";
 
 class ContentContainer extends Component {
 
     componentDidMount() {
         const { params: { id = 2 }} = this.props.match;
 
-        axios.get(`${API_BASE}/${id}`)
-            .then(res => {
-                this.props.setUserProfile(res.data);
-            });
+        this.props.getUserProfileThunk(id);
     }
 
     render() {
@@ -29,6 +24,11 @@ const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth
 });
 
-const mapDispatchToProps = { setUserProfile };
+const mapDispatchToProps = { setUserProfile, getUserProfileThunk };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContentContainer));
+const composedComponent = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+)(ContentContainer);
+
+export default composedComponent;

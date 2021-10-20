@@ -8,10 +8,18 @@ const instance = axios.create({
     }
 });
 
-const getUsers = (currentPage, pageSize) => {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`, {
+const authMe = () => {
+    return instance.get(`auth/me`, {
         withCredentials: true
-    })
+    });
+}
+
+const getProfile = (id) => {
+    return instance.get(`profile/${id}`);
+}
+
+const getUsers = (currentPage, pageSize) => {
+    return instance.get(`users?page=${currentPage}&count=${pageSize}`)
         .then(response => response.data);
 }
 
@@ -20,4 +28,14 @@ const follow = (id, method) => {
         .then(response => response.data);
 }
 
-export { getUsers, follow };
+const setStatus = (status) => {
+    return instance.put(`profile/status`, { status })
+        .then(response => response.data);
+}
+
+const getStatus = (id) => {
+    return instance.get(`profile/status/${id}`)
+        .then(response => response.data);
+}
+
+export { getUsers, follow, getProfile, authMe, setStatus, getStatus };

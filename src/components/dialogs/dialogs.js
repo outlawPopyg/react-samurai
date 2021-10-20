@@ -2,9 +2,10 @@ import React from 'react';
 import './dialogs.css';
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
+import withRedirect from "../../hoc/withRedirect";
 
 
-const Dialogs = ({ onSend, onMessage, dialogsPage }) => {
+const Dialogs = ({ isAuth, onSend, onMessage, dialogsPage }) => {
 
     const { dialogsData, messagesData, newMessageText } = dialogsPage;
 
@@ -38,4 +39,4 @@ const Dialogs = ({ onSend, onMessage, dialogsPage }) => {
     );
 }
 
-export default Dialogs;
+export default withRedirect(Dialogs);
