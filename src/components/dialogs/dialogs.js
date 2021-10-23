@@ -3,11 +3,16 @@ import './dialogs.css';
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
 import withRedirect from "../../hoc/withRedirect";
+import {Field, reduxForm} from "redux-form";
 
 
 const Dialogs = ({ isAuth, onSend, onMessage, dialogsPage }) => {
 
     const { dialogsData, messagesData, newMessageText } = dialogsPage;
+
+    const addNewMessage = () => {
+        console.log("new message");
+    }
 
     return (
         <>
@@ -32,11 +37,23 @@ const Dialogs = ({ isAuth, onSend, onMessage, dialogsPage }) => {
                 </div>
             </div>
             <div className="dialogs-input">
-                <input onChange={ onMessage } value={newMessageText} type="text"/>
-                <button onClick={ onSend }>Send</button>
+                <AddMessageFormRedux onSubmit={ addNewMessage }/>
             </div>
         </>
     );
 }
+
+const AddMessageForm = ({ handleSubmit }) => {
+    return (
+        <form onSubmit={ handleSubmit }>
+            <Field name={"newMessageText"} component={"input"} type="text"/>
+            <button>Send</button>
+        </form>
+    )
+}
+
+const AddMessageFormRedux = reduxForm({
+    form: "addMessageForm"
+})(AddMessageForm);
 
 export default withRedirect(Dialogs);

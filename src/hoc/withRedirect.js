@@ -9,12 +9,12 @@ const mapStateToProps = (state) => {
 }
 
 const withRedirect = (Wrapper) => {
-   function RedirectComponent(props) {
-       if (!props.isAuth) return <Redirect to="/login"/>
-       return <Wrapper {...props} />
+   function withRedirectComponent(props) {
+       if (!props.isAuth) return <Redirect to={"/login"} />;
+       return <Wrapper { ...props } />;
    }
 
-   return connect(mapStateToProps)(RedirectComponent);
+   return connect(mapStateToProps)(withRedirectComponent);
 }
 
 export default withRedirect;

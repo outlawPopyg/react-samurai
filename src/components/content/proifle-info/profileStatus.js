@@ -1,17 +1,16 @@
 import React, {Component} from "react";
-import { setStatus, getStatus } from "../../../api/api";
 
 export default class ProfileStatus extends Component {
 
     state = {
         editMode: false,
-        status: ''
+        status: this.props.status
     };
 
-    componentDidMount() {
-        const { id } = this.props;
-
-        getStatus(id).then(status => this.setState({ status }));
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({ status: this.props.status });
+        }
     }
 
     toggleActivateEditMode = () => {
@@ -22,8 +21,9 @@ export default class ProfileStatus extends Component {
         });
     }
 
+
     onChangeStatus = ({ target: { value }}) => {
-        this.setState({ status: value });
+        this.setState({ status: value })
     }
 
     render() {
@@ -32,7 +32,7 @@ export default class ProfileStatus extends Component {
                 {
                     !this.state.editMode &&
                         <div>
-                            <span onDoubleClick={ this.toggleActivateEditMode }>{this.state.status}</span>
+                            <span onDoubleClick={ this.toggleActivateEditMode }>{this.state.status || "no"}</span>
                         </div>
                 }
 
@@ -43,14 +43,7 @@ export default class ProfileStatus extends Component {
                             autoFocus
                             onBlur={ (event) => {
                                 this.toggleActivateEditMode();
-                                setStatus(event.target.value)
-                                    .then(res => {
-                                        if (res.resultCode === 0) {
-                                            this.setState({
-                                                status: event.target.value
-                                            });
-                                        }
-                                    });
+                                this.props.setUserStatusThunk(this.state.status);
                             }}
                             onChange={ this.onChangeStatus }
                             value={this.state.status}

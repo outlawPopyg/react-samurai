@@ -3,8 +3,9 @@ import './user-page.css';
 import userImage from '../../images/user.png';
 import {NavLink} from "react-router-dom";
 import {follow} from "../../api/api";
+import withLoader from '../../hoc/withLoader';
 
-export default function UserPage({ toggleFollow, followingInProgress, pageSize, totalUsersCount, users, currentPage, setCurrentPage }) {
+function UserPage({ toggleFollow, followingInProgress, pageSize, totalUsersCount, users, currentPage, setCurrentPage }) {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
     const pages = [];
@@ -52,4 +53,5 @@ export default function UserPage({ toggleFollow, followingInProgress, pageSize, 
     );
 }
 
+export default withLoader(UserPage, 'isFetching');
 

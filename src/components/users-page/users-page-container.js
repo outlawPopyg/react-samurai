@@ -5,6 +5,7 @@ import {
 import UsersPage from "./users-page";
 import {Component} from "react";
 import Loader from "../loader/loader";
+import withLoader from "../../hoc/withLoader";
 
 class UserPageContainer extends Component {
     componentDidMount() {
@@ -18,9 +19,6 @@ class UserPageContainer extends Component {
     }
 
     render() {
-        if (this.props.isFetching) {
-            return <Loader />;
-        }
         return <UsersPage {...this.props} />;
     }
 }
@@ -31,8 +29,8 @@ const mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        isFetching: state.usersPage.isFetching
     };
 };
 

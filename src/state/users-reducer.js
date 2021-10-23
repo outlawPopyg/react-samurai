@@ -1,4 +1,4 @@
-import {follow, getUsers} from "../api/api";
+import {follow, getStatus, getUsers, setStatus } from "../api/api";
 
 const TOGGLE_FOLLOW = "TOGGLE-FOLLOW";
 const SET_USERS = "SET-USERS";
@@ -6,6 +6,7 @@ const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
 const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
 const SET_FETCHING = "SET-FETCHING";
 const FOLLOWING_IN_PROGRESS = "FOLLOWING-IN-PROGRESS";
+const GET_STATUS = "GET-STATUS";
 
 const initialState = {
     users: [],
@@ -14,7 +15,8 @@ const initialState = {
     currentPage: 1,
     isFetching: false,
     followingInProgress: [],
-    followingId: null
+    followingId: null,
+    status: ""
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -64,6 +66,12 @@ const usersReducer = (state = initialState, action) => {
                     state.followingInProgress.filter(id => id !== action.followingId)
             }
 
+        case GET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
+
         default: return state;
     }
 }
@@ -74,7 +82,17 @@ export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, curren
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
 export const setFetching = (isFetching) => ({ type: SET_FETCHING, isFetching });
 export const setFollowing = (followingInProgress, followingId) => ({ type: FOLLOWING_IN_PROGRESS, followingInProgress, followingId });
+export const setProfileStatus = (status) => ({ type: GET_STATUS, status });
 
+export const getUserStatusThunk = (id) => (dispatch) => {
+    getStatus(id)
+        .then(response => dispatch(setProfileStatus(response)));
+}
+
+export const setUserStatusThunk = (status) => (dispatch) => {
+    setStatus(status)
+        .then(response => dispatch(setProfileStatus(status)));
+}
 
 export const getUsersThunk = (currentPage, pageSize) => (dispatch) => {
     dispatch(setFetching(true));

@@ -2,15 +2,16 @@ import React from 'react';
 import Loader from "../../loader/loader";
 import {Redirect} from "react-router-dom";
 import ProfileStatus from "./profileStatus";
+import withLoader from "../../../hoc/withLoader";
 
-const ProfileInfo = ({ userInfo, isAuth, id }) => {
+const ProfileInfo = ({ userInfo, isAuth, id, status, setUserStatusThunk }) => {
 
     if (!isAuth) {
         return <Redirect to="/login" />
     }
 
     if (!userInfo) {
-        return <Loader />
+        return <Loader />;
     }
 
     const { fullName, photos: { large }, aboutMe } = userInfo;
@@ -21,7 +22,7 @@ const ProfileInfo = ({ userInfo, isAuth, id }) => {
             </div>
             <h1>{ fullName }</h1>
             <div>{ aboutMe }</div>
-            <ProfileStatus id={id}/>
+            <ProfileStatus status={status} id={id} setUserStatusThunk={setUserStatusThunk}/>
         </>
     );
 
