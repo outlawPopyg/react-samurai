@@ -1,5 +1,5 @@
 import './myPosts.css';
-import { updateTextActionCreator, addPostActionCreator } from "../../../state/content-reducer";
+import { addPostActionCreator } from "../../../state/content-reducer";
 import { connect } from "react-redux";
 import MyPosts from "./myPosts";
 
@@ -11,8 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onChangeInput: ({ target: { value } }) => dispatch(updateTextActionCreator(value)),
-        onButtonClick: () => dispatch(addPostActionCreator())
+        onButtonClick: (value) => dispatch(addPostActionCreator(value))
     };
 };
 

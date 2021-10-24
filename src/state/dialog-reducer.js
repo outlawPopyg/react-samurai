@@ -1,9 +1,7 @@
 import {v4 as uuid} from "uuid";
-const UPDATE_NEW_MESSAGE = "UPDATE-NEW-MESSAGE";
 const SEND_MESSAGE = "SEND-MESSAGE";
 
-const updateMessageActionCreator = (value) => ({ type: "UPDATE-NEW-MESSAGE", text: value });
-const sendMessageActionCreator = () => ({ type: "SEND-MESSAGE" });
+const sendMessageActionCreator = (value) => ({ type: "SEND-MESSAGE", value });
 
 const initialState = {
     messagesData: [
@@ -16,24 +14,18 @@ const initialState = {
         { id: uuid(), name: "Andrew" },
         { id: uuid(), name: "Calvin" },
         { id: uuid(), name: "Dutch" }
-    ],
-    newMessageText: ''
+    ]
 };
 
 const dialogReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE:
-            return {
-                ...state,
-                newMessageText: action.text
-            };
 
         case SEND_MESSAGE:
+            const message = action.value;
             return {
                 ...state,
-                messagesData: [...state.messagesData, { id: uuid(), message: state.newMessageText }],
-                newMessageText: ""
+                messagesData: [...state.messagesData, { id: uuid(), message }]
             }
 
         default:
@@ -44,7 +36,6 @@ const dialogReducer = (state = initialState, action) => {
 export default dialogReducer;
 
 export {
-    updateMessageActionCreator,
     sendMessageActionCreator
 }
 
