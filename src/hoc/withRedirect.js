@@ -8,13 +8,17 @@ const mapStateToProps = (state) => {
     }
 }
 
-const withRedirect = (Wrapper) => {
-   function withRedirectComponent(props) {
-       if (!props.isAuth) return <Redirect to={"/login"} />;
-       return <Wrapper { ...props } />;
-   }
+// wrapper - то, что нужно обернуть
+// to - url куда редиректнуть
+// callback - колбэк дающий понять по какому параметру редиректить
 
-   return connect(mapStateToProps)(withRedirectComponent);
+export const withRedirect = (Wrapper, to, callback) => {
+    function withRedirectComponent(props) {
+        const res = callback(props);
+        if (res) return <Redirect to={`/${to}`} />;
+        return <Wrapper { ...props } />;
+    }
+
+    return connect(mapStateToProps)(withRedirectComponent);
 }
 
-export default withRedirect;

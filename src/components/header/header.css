@@ -9,3 +9,8 @@ header .login a {
     font-weight: bold;
     text-decoration: none;
 }
+
+.form-summary-error {
+    border: 1px solid darkred;
+    color: darkred;
+}

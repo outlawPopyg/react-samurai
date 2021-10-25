@@ -5,8 +5,7 @@ import { setUserProfile, getUserProfileThunk } from "../../state/content-reducer
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {getUserStatusThunk, setUserStatusThunk} from "../../state/users-reducer";
-import withRedirect from "../../hoc/withRedirect";
-import withLoader from "../../hoc/withLoader";
+import { withRedirect } from "../../hoc/withRedirect";
 
 class ContentContainer extends Component {
 
@@ -34,8 +33,7 @@ const mapDispatchToProps = { setUserProfile, getUserProfileThunk, getUserStatusT
 
 const composedComponent = compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withRouter,
-    withRedirect
-)(ContentContainer);
+    withRouter
+)(withRedirect(ContentContainer, "login", (props) => !props.isAuth));
 
 export default composedComponent;

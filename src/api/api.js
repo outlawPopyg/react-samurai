@@ -38,4 +38,14 @@ const getStatus = (id) => {
         .then(response => response.data);
 }
 
-export { getUsers, follow, getProfile, authMe, setStatus, getStatus };
+const apiLogin = ({ email, password, rememberMe }) => {
+    return instance.post(`auth/login`, { email, password, rememberMe })
+        .then(response => response.data);
+}
+
+const apiLogout = () => {
+    return instance.delete(`auth/login`)
+        .then(response => response.data);
+}
+
+export { getUsers, follow, getProfile, authMe, setStatus, getStatus, apiLogin, apiLogout };

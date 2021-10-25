@@ -1,8 +1,10 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import "./header.css";
+import { connect } from "react-redux";
+import { logout } from "../../state/auth-reducer";
 
-const Header = ({ isAuth, login }) => {
+const Header = ({ isAuth, login, logout }) => {
     return (
         <header>
             <div className="image">
@@ -11,10 +13,12 @@ const Header = ({ isAuth, login }) => {
                     alt="logo"/>
             </div>
             <div className="login">
-                { !isAuth ? <NavLink to="/login">Login</NavLink> : login }
+                { !isAuth ?
+                    <NavLink to="/login">Login</NavLink> :
+                    <div>{ login } <button onClick={ logout }>logout</button></div> }
             </div>
         </header>
     );
 }
 
-export default Header;
+export default connect(null, { logout })(Header);

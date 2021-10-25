@@ -2,7 +2,7 @@ import React from 'react';
 import './dialogs.css';
 import DialogItem from "./dialog-item/dialog-item";
 import Message from "./message/message";
-import withRedirect from "../../hoc/withRedirect";
+import { withRedirect } from "../../hoc/withRedirect";
 import {Field, reduxForm} from "redux-form";
 import { withTextArea } from "../inputs/textarea";
 import { maxLengthCreator, requiredField } from "../../validators/validator";
@@ -64,4 +64,4 @@ const AddMessageFormRedux = reduxForm({
     form: "addMessageForm"
 })(AddMessageForm);
 
-export default withRedirect(Dialogs);
+export default withRedirect(Dialogs, "login", (props) => !props.isAuth);

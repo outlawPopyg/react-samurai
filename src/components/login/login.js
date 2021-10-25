@@ -2,37 +2,44 @@ import React from "react";
 import {Field, reduxForm} from "redux-form";
 import {withInput} from "../inputs/textarea";
 import {maxLengthCreator, requiredField } from "../../validators/validator";
+import {login} from "../../state/auth-reducer";
+import { connect } from "react-redux";
+import { withRedirect } from "../../hoc/withRedirect";
 
-const maxLength10 = maxLengthCreator(10);
+const maxLength30 = maxLengthCreator(30);
 
-const LoginForm = ({ handleSubmit }) => {
+const LoginForm = ({ handleSubmit, error }) => {
     return (
         <form onSubmit={ handleSubmit }>
             <div>
-                <Field
-                    placeholder={"Login"}
-                    name={"login"}
-                    component={ withInput }
-                    validate={[ requiredField, maxLength10]}
-                />
-            </div>
-            <div>
-                <Field
-                    placeholder={"Password"}
-                    name={"password"}
-                    component={ withInput }
-                    validate={[ requiredField, maxLength10]}
-                />
-            </div>
-            <div>
-                <Field
-                    component={ withInput }
-                    type={"checkbox"}
-                    name={"rememberMe"}
-                /> remember me
-            </div>
-            <div>
-                <button>Sign in</button>
+                <div>
+                    <Field
+                        placeholder={"Login"}
+                        name={"email"}
+                        component={ withInput }
+                        validate={[ requiredField, maxLength30]}
+                    />
+                </div>
+                <div>
+                    <Field
+                        placeholder={"Password"}
+                        name={"password"}
+                        component={ withInput }
+                        validate={[ requiredField, maxLength30]}
+                    />
+                </div>
+                <div>
+                    <Field
+                        component={ withInput }
+                        type={"checkbox"}
+                        name={"rememberMe"}
+                    /> remember me
+                </div>
+                { error && <div className={"form-summary-error"}>{ error }</div>}
+                <div>
+                    <button>Sign in</button>
+                </div>
+
             </div>
         </form>
     );
@@ -43,10 +50,10 @@ const LoginReduxForm = reduxForm({
     form: 'login'
 })(LoginForm);
 
-const Login = () => {
+const Login = ({ login }) => {
 
     const onSubmit = (formData) => {
-        console.log(formData);
+        login(formData);
     }
 
     return (
@@ -56,5 +63,7 @@ const Login = () => {
         </>
     )
 }
+const mapDispatchToProps = { login };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(withRedirect(
+    Login, "profile", (props) => props.isAuth));
