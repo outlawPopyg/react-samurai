@@ -31,7 +31,7 @@ export const setUserData = (id, email, login, isAuth) => ({ type: SET_USER_DATA,
     payload: { id, email, login, isAuth} });
 
 export const authMeThunk = () => (dispatch) => {
-    authMe()
+    return authMe()
         .then(response => {
             if (response.data.resultCode === 0) {
                 const { id, email, login } = response.data.data;

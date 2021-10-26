@@ -2,13 +2,8 @@ import React, {Component} from 'react';
 import Header from "./header";
 import {connect} from "react-redux";
 import { setUserData, authMeThunk } from "../../state/auth-reducer";
-import {authMe} from "../../api/api";
 
 class HeaderContainer extends Component {
-
-    componentDidMount() {
-        this.props.authMeThunk();
-    }
 
     render() {
         return <Header {...this.props} />
