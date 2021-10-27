@@ -4,8 +4,13 @@ import {
 } from "../../state/users-reducer";
 import UsersPage from "./users-page";
 import {Component} from "react";
-import Loader from "../loader/loader";
-import withLoader from "../../hoc/withLoader";
+import {
+    getCurrentPage,
+    getFollowingInProgress, getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers, getUsersReselect
+} from "../../selectors/selectors";
 
 class UserPageContainer extends Component {
     componentDidMount() {
@@ -19,18 +24,20 @@ class UserPageContainer extends Component {
     }
 
     render() {
+        console.log("render");
         return <UsersPage {...this.props} />;
     }
 }
 
 const mapStateToProps = (state) => {
+    console.log("MapState");
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        followingInProgress: state.usersPage.followingInProgress,
-        isFetching: state.usersPage.isFetching
+        users: getUsersReselect(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        followingInProgress: getFollowingInProgress(state),
+        isFetching: getIsFetching(state)
     };
 };
 

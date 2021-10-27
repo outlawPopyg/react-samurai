@@ -233,12 +233,119 @@ axios.get(`${API_BASE}/auth/me`, {
          withCredentials: true
     }).then(res => console.log(res));
 ```
+## Библиотека Reselect
 
+Пример: у нас есть ежесекундно диспачущий кусок кода в `index.js`.
+```js
+setInterval(() => {
+    store.dispatch({ type: "FAKE"});
+}, 1500);
+```
+Reducer:
+```js
+const initialState = {
+    users: [],
+    pageSize: 100,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false,
+    followingInProgress: [],
+    followingId: null,
+    status: "",
+    fake: 10
+};
 
+const usersReducer = (state = initialState, action) => {
+    switch (action.type) {
 
+     //..................................//
 
+        case "FAKE":
+            return {
+                ...state,
+                fake: state.fake + 1
+            }
 
+        default: return state;
+    }
+}
+```
 
+**Reducer** каждую секунду обрабатывет dispatch и перерисовывает дерево
+состояния всего приложения. Так же у нас есть подключенный к connect'у
+компонент `users-page-container`. При каждом обновлении дерева состояния
+срабатывает `mapStateToProps`, он проверяет изменилось ли хоть одно свойство,
+в его списке. Если да, то отрендерит компонент заново.
+
+```js
+class UserPageContainer extends Component {
+    componentDidMount() {
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.currentPage !== this.props.currentPage) {
+            this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        }
+    }
+
+    render() {
+        console.log("render");
+        return <UsersPage {...this.props} />;
+    }
+}
+
+const mapStateToProps = (state) => {
+    console.log("MapState");
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        followingInProgress: getFollowingInProgress(state),
+        isFetching: getIsFetching(state)
+    };
+};
+
+const mapDispatchToProps = {
+    onToggleFollow,
+    setCurrentPage,
+    setFollowing,
+    getUsers: getUsersThunk,
+    toggleFollow: toggleFollowUserThunk
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPageContainer);
+```
+
+Обратим внимание на `getUsers`:
+```js
+const getUsers = state => state.usersPage.users.filter(u => true);
+```
+Это ф-ия селектор которая фильтрует массив пользователей. Метод filter возвращает новый
+массив, следовательно `mapStateToProps` будет считать, что свойство users изменилось, и
+следовательно перерисовывать компонент всякий раз когда происходит dispatch из `index.js`.
+
+Для решения проблемы будем импользовать библиотеку reselect. Она будет возвращать новое
+значение из селектора только тогда , когда что-то поменяется в списках пользователей:
+```js
+const getUsers = state => state.usersPage.users;
+
+export const getUsersReselect = createSelector(getUsers, (users) => {
+    return users.filter(u => true);
+});
+```
+
+Селектор может зависеть и от нескольких свойств:
+```js
+const getUsers = state => state.usersPage.users;
+const isFetchin = state => state.usersPage.isFetchin;
+
+export const getUsersReselect = createSelector(getUsers, isFetching,
+         (users, isFetching) => {
+             return users.filter(u => true); 
+         });
+```
 
 
 

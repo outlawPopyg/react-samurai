@@ -16,7 +16,8 @@ const initialState = {
     isFetching: false,
     followingInProgress: [],
     followingId: null,
-    status: ""
+    status: "",
+    fake: 10
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -70,6 +71,12 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.status
+            }
+
+        case "FAKE":
+            return {
+                ...state,
+                fake: state.fake + 1
             }
 
         default: return state;
