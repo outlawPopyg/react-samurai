@@ -1,58 +1,38 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 
-export default class ProfileStatus extends Component {
+const ProfileStatusWithHooks = ({ status, setUserStatusThunk }) => {
 
-    state = {
-        editMode: false,
-        status: this.props.status
-    };
+    const [ editMode, setEditMode ] = useState(false);
+    const [ stateStatus, setStateStatus ] = useState(status);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({ status: this.props.status });
-        }
-    }
+    useEffect(() => setStateStatus(status), [ status ]);
 
-    toggleActivateEditMode = () => {
-        this.setState((prevState) => {
-            return {
-                editMode: !prevState.editMode
+    return  (
+        <>
+            {
+                !editMode &&
+                <div>
+                    <span onDoubleClick={ () => setEditMode(true) }>{status || "no"}</span>
+                </div>
             }
-        });
-    }
 
-
-    onChangeStatus = ({ target: { value }}) => {
-        this.setState({ status: value })
-    }
-
-    render() {
-        return  (
-            <>
-                {
-                    !this.state.editMode &&
-                        <div>
-                            <span onDoubleClick={ this.toggleActivateEditMode }>{this.state.status || "no"}</span>
-                        </div>
-                }
-
-                {
-                    this.state.editMode &&
-                    <div>
-                        <input
-                            autoFocus
-                            onBlur={ (event) => {
-                                this.toggleActivateEditMode();
-                                this.props.setUserStatusThunk(this.state.status);
-                            }}
-                            onChange={ this.onChangeStatus }
-                            value={this.state.status}
-                            type="text"
-                        />
-                    </div>
-                }
-            </>
-        );
-    }
+            {
+                editMode &&
+                <div>
+                    <input
+                        autoFocus
+                        onBlur={ (event) => {
+                            setEditMode(false);
+                            setUserStatusThunk(stateStatus);
+                        }}
+                        onChange={ (event) => setStateStatus(event.target.value) }
+                        value={ stateStatus }
+                        type="text"
+                    />
+                </div>
+            }
+        </>
+    );
 }
 
+export default ProfileStatusWithHooks;
