@@ -7,11 +7,12 @@ import ContentContainer from "./components/content/contentContainer";
 import UsersPageContainer from "./components/users-page/users-page-container";
 import HeaderContainer from "./components/header/headerContainer";
 import Login from "./components/login/login";
-import { connect } from "react-redux";
+import {connect, Provider} from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import Loader from "./components/loader/loader";
 import { initializeApp } from "./state/app-reducer";
+import store from "./state/redux-store";
 
 export const API_BASE = "https://social-network.samuraijs.com/api/1.0/users";
 
@@ -49,7 +50,19 @@ const mapStateToProps = (state) => ({
     initialized: state.app.initialized
 })
 
-export default compose(
+const AppContainer = compose(
     withRouter,
     connect(mapStateToProps, { initializeApp })
 )(App);
+
+const MainApp = () => {
+    return (
+        <Provider store={store}>
+            <BrowserRouter>
+                <AppContainer />
+            </BrowserRouter>
+        </Provider>
+    );
+}
+
+export default MainApp;

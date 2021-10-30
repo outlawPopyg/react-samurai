@@ -346,6 +346,10 @@ export const getUsersReselect = createSelector(getUsers, isFetching,
              return users.filter(u => true); 
          });
 ```
+## React.memo и shouldComponentUpdate
 
+Если наш компонент перерисовывается многократно при этом его пропсы не
+меняются можно обернуть компонент в React.memo() этот метод перерисует
+компонент только тогда когда тот получит новые пропсы.
 
 

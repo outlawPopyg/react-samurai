@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import Post from "./post/post";
 import './myPosts.css';
 import {Field, reduxForm} from "redux-form";
@@ -7,12 +7,11 @@ import { withInput } from "../../inputs/textarea";
 
 const maxLength10 = maxLengthCreator(10);
 
-const MyPosts = ({ contentPage, onButtonClick }) => {
+const MyPosts = React.memo(({ postsData, onButtonClick }) => {
 
-    const { postsData } = contentPage;
+    console.log("render");
 
     const addNewPost = ({ postText }) => onButtonClick(postText);
-
     return (
         <div>
             <MyPostsFormRedux onSubmit={ addNewPost }/>
@@ -25,7 +24,7 @@ const MyPosts = ({ contentPage, onButtonClick }) => {
             </div>
         </div>
     );
-}
+});
 
 const MyPostsForm = ({ handleSubmit }) => {
     return (
