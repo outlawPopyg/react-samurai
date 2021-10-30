@@ -4,26 +4,18 @@ import userImage from '../../images/user.png';
 import {NavLink} from "react-router-dom";
 import {follow} from "../../api/api";
 import withLoader from '../../hoc/withLoader';
+import Paginator from "../paginator/paginator";
 
-function UserPage({ toggleFollow, followingInProgress, pageSize, totalUsersCount, users, currentPage, setCurrentPage }) {
-
-    const pagesCount = Math.ceil(totalUsersCount / pageSize);
-    const pages = [];
-    for (let i = 1; i <= pagesCount; i++) pages.push(i);
-
+const UserPage = ({ toggleFollow, followingInProgress, pageSize, totalUsersCount, users, currentPage, setCurrentPage }) => {
     return (
         <>
             <h1>UsersPage</h1>
-            <div className="numbers">
-                { pages.map(p => {
-                    return <span
-                        onClick={() => setCurrentPage(p) }
-                        className={ p === currentPage ? "selectedPage" : null }
-                        key={p}>
-                        {p}
-                    </span>
-                })}
-            </div>
+            <Paginator pageSize={pageSize}
+                       totalUsersCount={totalUsersCount}
+                       setCurrentPage={setCurrentPage}
+                       currentPage={currentPage}
+                       portionSize={10}
+            />
             <ul className="list">
                 {
                     users.map(({ id, name, followed, photos: { small } }) => {

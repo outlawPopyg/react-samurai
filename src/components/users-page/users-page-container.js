@@ -24,13 +24,11 @@ class UserPageContainer extends Component {
     }
 
     render() {
-        console.log("render");
         return <UsersPage {...this.props} />;
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log("MapState");
     return {
         users: getUsersReselect(state),
         pageSize: getPageSize(state),

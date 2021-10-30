@@ -107,7 +107,7 @@ export const getUsersThunk = (currentPage, pageSize) => (dispatch) => {
     getUsers(currentPage, pageSize)
         .then(data => {
             dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(Math.round(data.totalCount / 5)));
+            dispatch(setTotalUsersCount(Math.round(data.totalCount)));
         })
         .finally(() => dispatch(setFetching(false)));
 }
